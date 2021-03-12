@@ -1,7 +1,7 @@
 #include "binary_trees.h"
 
 /**
- * bst_intert - inserts a value in a BST
+ * bst_insert - inserts a value in a BST
  * @tree: reference to the root
  * @value: goes inside the node to insert
  * Return: reference to the new node
