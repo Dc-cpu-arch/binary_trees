@@ -18,40 +18,6 @@ size_t binary_tree_height(const binary_tree_t *tree)
 	return ((leftHeight > rightHeight) ? leftHeight : rightHeight);
 }
 
-
-/**
- * binary_tree_balance - measures the balance factor of a tree
- * @tree: reference to the root
- * Return: the balance between the left and right sub trees of a tree
- */
-
-int binary_tree_balance(const binary_tree_t *tree)
-{
-	if (!tree)
-		return (0);
-	return (binary_tree_height(tree->left) -
-	binary_tree_height(tree->right));
-}
-
-/**
- * binary_tree_is_full - checks if a tree is full
- * @tree: reference to the root
- * Return: 1 if the tree is full, 0 if its not
- */
-
-int binary_tree_is_full(const binary_tree_t *tree)
-{
-	int leftChild = 0, rightChild = 0;
-
-	if (!tree)
-		return (0);
-	if (!tree->left && !tree->right)
-		return (1);
-	leftChild = binary_tree_is_full(tree->left);
-	rightChild = binary_tree_is_full(tree->right);
-	return ((leftChild == 0 || rightChild == 0) ? 0 : 1);
-}
-
 /**
  * binary_tree_is_perfect - checks if a tree is perfect
  * @tree: reference to parent or root
@@ -62,7 +28,17 @@ int binary_tree_is_perfect(const binary_tree_t *tree)
 {
 	if (!tree)
 		return (0);
-	if (binary_tree_balance(tree) == 0 && binary_tree_is_full(tree))
+
+	if (binary_tree_height(tree->left) != binary_tree_height(tree->right))
+		return (0);
+
+	if (!tree->left && !tree->right)
 		return (1);
+
+	if ((tree->left && tree->right) && (tree->left->parent ==
+		tree->right->parent))
+		return (binary_tree_is_perfect(tree->left)
+			* binary_tree_is_perfect(tree->right));
+
 	return (0);
 }
